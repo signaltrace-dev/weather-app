@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { WeatherData } from './weather-data';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,16 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'webapp';
+  title = 'Weather App';
+  weatherData = new Array<WeatherData>();
+
+  searchWasExecuted(executed: Boolean){
+    if(executed)    {
+      this.weatherData = new Array<WeatherData>();
+    }
+  }
+
+  weatherDataUpdated(data: WeatherData[]){
+    this.weatherData = data;
+  }
 }
