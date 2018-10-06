@@ -3,5 +3,6 @@ export class WeatherData{
     Description: string;
     Humidity: number;
     Temperature: number;
+    TemperatureRounded: number;
     Zip: string;
 }

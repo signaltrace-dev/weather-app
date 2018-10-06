@@ -17,6 +17,7 @@ export class LocationFormComponent implements OnInit {
 
   location = new FormControl('');
   errors = [];
+  searching = false;
   
   constructor(private http: HttpClient, private weatherDataService: WeatherDataService) { }
 
@@ -24,7 +25,7 @@ export class LocationFormComponent implements OnInit {
   }
 
   private handleError(error: HttpErrorResponse){
-    let message = error.error && error.error.Message ? error.error.Message : 'Sorry, we ran into a problem.';
+    let message = error.error && error.error.Message ? error.error.Message : 'Sorry, it looks like there was a problem contacting the weather service!';
     switch(error.status){
       case 404:
         message = `We couldn't find anything matching "${this.location.value}". Try searching again.`;
@@ -39,6 +40,7 @@ export class LocationFormComponent implements OnInit {
 
     if(this.location.value){
       this.searchExecuted.emit(true);
+      this.searching = true;
 
       this.weatherDataService.getData(this.location.value)
         .subscribe(resp =>{
@@ -46,12 +48,15 @@ export class LocationFormComponent implements OnInit {
             data = data.concat(resp.body);
             data = data.concat(compareResp.body);
             this.weatherData.emit(data);
+            this.searching = false;
           },
           error => {
+            this.searching = false;
             this.handleError(error);
           })
         },
         error => {
+          this.searching = false;
           this.handleError(error);
         });
       }
