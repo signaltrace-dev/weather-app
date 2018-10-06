@@ -7,6 +7,7 @@ using System.Web.Http;
 using WeatherApi.Models;
 using WeatherApi.Repositories;
 using NLog;
+using WeatherApi.Filters;
 
 namespace WeatherApi.Controllers
 {
@@ -21,6 +22,7 @@ namespace WeatherApi.Controllers
         }
 
         [HttpPost]
+        [ApiKeyRequired]
         public HttpResponseMessage Post(WeatherDataRequest request)
         {
             try
@@ -33,8 +35,10 @@ namespace WeatherApi.Controllers
                 {
                     return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
                 }
+
                 var repo = new WeatherApiRepository();
                 var weatherData = repo.Get(request);
+
                 return Request.CreateResponse(HttpStatusCode.OK, weatherData);
 
             }
