@@ -9,9 +9,13 @@ using WeatherApi.Repositories;
 using NLog;
 using WeatherApi.Filters;
 using System.Threading.Tasks;
+using System.Web.Http.Cors;
 
 namespace WeatherApi.Controllers
 {
+    // This is not ideal! In an actual live environment, you would want to limit the origins/headers/methods 
+    // based on the host name of the client application
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class WeatherController : ApiController
     {
         private static Logger logger = LogManager.GetCurrentClassLogger();
@@ -20,6 +24,12 @@ namespace WeatherApi.Controllers
         public string Get(string template)
         {
             return "This endpoint only allows POST requests.";
+        }
+
+        [HttpOptions]
+        public HttpResponseMessage Post()
+        {
+            return Request.CreateResponse(HttpStatusCode.OK);
         }
 
         [HttpPost]
@@ -43,6 +53,26 @@ namespace WeatherApi.Controllers
 
                 return Request.CreateResponse(HttpStatusCode.OK, weatherData);
 
+            }
+            catch(WebException wex)
+            {
+                logger.Error(wex);
+                if(wex.Status == WebExceptionStatus.ProtocolError && wex.Response != null)
+                {
+                    var response = (HttpWebResponse)wex.Response;
+                    if(response.StatusCode == HttpStatusCode.NotFound)
+                    {
+                        return Request.CreateErrorResponse(response.StatusCode, "Could not find anything with the provided parameters.");
+                    }
+                    else
+                    {
+                        return Request.CreateErrorResponse(response.StatusCode, "There was an error processing your request.");
+                    }
+                }
+                else
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "There was an error processing your request.");
+                }
             }
             catch (Exception ex)
             {

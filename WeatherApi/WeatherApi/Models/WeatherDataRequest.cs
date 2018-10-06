@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
 
@@ -23,7 +20,6 @@ namespace WeatherApi.Models
                 return match.Success;
             }
         }
-
         public DateTime Timestamp { get; }
 
         public WeatherDataRequest()
