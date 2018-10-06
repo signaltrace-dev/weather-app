@@ -8,6 +8,7 @@ using WeatherApi.Models;
 using WeatherApi.Repositories;
 using NLog;
 using WeatherApi.Filters;
+using System.Threading.Tasks;
 
 namespace WeatherApi.Controllers
 {
@@ -23,10 +24,11 @@ namespace WeatherApi.Controllers
 
         [HttpPost]
         [ApiKeyRequired]
-        public HttpResponseMessage Post(WeatherDataRequest request)
+        public async Task<HttpResponseMessage> Post(WeatherDataRequest request)
         {
             try
             {
+                // Ensure that we have a valid request
                 if(request == null)
                 {
                     return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "You must provide a valid request body.");
@@ -36,8 +38,8 @@ namespace WeatherApi.Controllers
                     return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
                 }
 
-                var repo = new WeatherApiRepository();
-                var weatherData = repo.Get(request);
+                var repo = new WeatherApiRepository(Settings.WeatherApi.WeatherApiEndPoint, Settings.WeatherApi.WeatherApiKey);
+                var weatherData = await repo.GetAsync(request);
 
                 return Request.CreateResponse(HttpStatusCode.OK, weatherData);
 

@@ -160,6 +160,8 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Models\WeatherApiData.cs" />
+    <Compile Include="Settings\WeatherApi.cs" />
     <Compile Include="Controllers\WeatherController.cs" />
     <Compile Include="Filters\ApiKeyRequired.cs" />
     <Compile Include="Global.asax.cs">
