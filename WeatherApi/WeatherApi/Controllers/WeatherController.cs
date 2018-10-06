@@ -25,6 +25,14 @@ namespace WeatherApi.Controllers
         {
             try
             {
+                if(request == null)
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "You must provide a valid request body.");
+                }
+                if (!ModelState.IsValid)
+                {
+                    return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
+                }
                 var repo = new WeatherApiRepository();
                 var weatherData = repo.Get(request);
                 return Request.CreateResponse(HttpStatusCode.OK, weatherData);
