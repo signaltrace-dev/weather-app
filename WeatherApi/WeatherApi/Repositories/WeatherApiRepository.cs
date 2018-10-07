@@ -64,9 +64,11 @@ namespace WeatherApi.Repositories
             // API uses different query params depending on the type of search
             var queryType = request.LocationIsZip ? "zip" : "q";
 
+            var queryPrefix = ApiEndpoint.Contains("?") ? "&" : "?";
+
             // Create request from weather API URL - note that we're passing in Imperial for the units param, but 
             // this would likely be something that we could break out into a configuration param.
-            var apiRequest = (HttpWebRequest)WebRequest.Create(String.Format("{0}?{1}={2}&APPID={3}&units=imperial", ApiEndpoint, queryType, request.Location, ApiKey));
+            var apiRequest = (HttpWebRequest)WebRequest.Create(String.Format("{0}{1}{2}={3}&APPID={4}&units=imperial", ApiEndpoint, queryPrefix, queryType, request.Location, ApiKey));
 
             return apiRequest;
         }
