@@ -21,15 +21,9 @@ namespace WeatherApi.Controllers
         private static Logger logger = LogManager.GetCurrentClassLogger();
 
         [HttpGet]
-        public string Get(string template)
+        public HttpResponseMessage Get()
         {
-            return "This endpoint only allows POST requests.";
-        }
-
-        [HttpOptions]
-        public HttpResponseMessage Post()
-        {
-            return Request.CreateResponse(HttpStatusCode.OK);
+            return Request.CreateResponse(HttpStatusCode.Forbidden, "This endpoint only allows POST requests.");
         }
 
         [HttpPost]
@@ -38,7 +32,7 @@ namespace WeatherApi.Controllers
         {
             try
             {
-                // Ensure that we have a valid request
+                // Ensure that we have a valid request and the model passes validation
                 if(request == null)
                 {
                     return Request.CreateErrorResponse(HttpStatusCode.BadRequest, "You must provide a valid request body.");

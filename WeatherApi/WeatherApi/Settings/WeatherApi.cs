@@ -15,6 +15,14 @@ namespace WeatherApi.Settings
             }
         }
 
+        public static string WeatherApiIconUrl
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings["weatherApiIconUrl"];
+            }
+        }
+
         public static string WeatherApiKey
         {
             get {

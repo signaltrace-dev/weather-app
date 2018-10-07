@@ -15,6 +15,10 @@ namespace WeatherApi.Models
         {
             get
             {
+                if (string.IsNullOrEmpty(Location))
+                {
+                    return false;
+                }
                 var regex = new Regex(@"\d{5}(-\d{4})?");
                 var match = regex.Match(Location);
                 return match.Success;

@@ -6,6 +6,9 @@ using WeatherApi.Models;
 
 namespace WeatherApi.Repositories
 {
+    /// <summary>
+    /// Test implementation of an IWeatherRepository using static data.
+    /// </summary>
     public class WeatherRepository : IWeatherRepository
     {
         public IEnumerable<WeatherData> Get(WeatherDataRequest request)

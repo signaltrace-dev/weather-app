@@ -2,6 +2,9 @@
 
 namespace WeatherApi.Models
 {
+    /// <summary>
+    /// Model based on the JSON data returned from the OpenWeatherMap API.
+    /// </summary>
     public class WeatherApiData
     {
         public Coord coord { get; set; }
