@@ -1,6 +1,16 @@
-<div class="card" style="width: 18rem;" *ngFor="let wd of data; index as i">
-  <div class="card-body">
-    <h5 class="card-title">{{ wd.CityName }}</h5>
-    <p class="card-text">{{wd.TemperatureRounded}}&deg;, {{ wd.Description }}</p>
+
+
+<div class="row">
+  <div class="col-sm-6" *ngFor="let wd of data; index as i">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">{{ wd.CityName }}{{ wd.iconUrl }}</h5>
+        <img src="{{ wd.IconUrl }}"><span class="card-text">{{wd.TemperatureRounded}}&deg;, {{ wd.Description }}</span>
+      </div>
+    </div>
   </div>
+</div>
+
+<div *ngIf="hottest"> 
+  <p class="alert alert-success lead text-center">{{ hottest === 'Both' ? 'Both locations are the same temperature.' : hottest + ' is the hotter of the locations.' }}</p>
 </div>

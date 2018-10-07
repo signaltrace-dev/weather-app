@@ -8,6 +8,8 @@ import { WeatherData } from '../weather-data';
 })
 export class WeatherDataComponent implements OnInit {
   @Input() data: WeatherData[];
+  @Input() hottest;
+  
   constructor() { }
 
   ngOnInit() {

@@ -3,6 +3,6 @@
     <p class="lead">Enter a city or ZIP code below and click "Search" to get a quick weather comparison!</p>
     <app-location-form (weatherData)="weatherDataUpdated($event)" (searchExecuted)="searchWasExecuted($event)"></app-location-form>
   </div>
-  <app-weather-data [data]="weatherData"></app-weather-data>
+  <app-weather-data [data]="weatherData" [hottest]="hottest"></app-weather-data>
 
 

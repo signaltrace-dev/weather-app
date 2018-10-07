@@ -1,6 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { LocationFormComponent } from './location-form.component';
+import { HttpClientTestingModule } from "@angular/common/http/testing";
 
 describe('LocationFormComponent', () => {
   let component: LocationFormComponent;
@@ -8,7 +10,12 @@ describe('LocationFormComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LocationFormComponent ]
+      declarations: [ LocationFormComponent ],
+      imports:[
+        FormsModule,
+        HttpClientTestingModule,
+        ReactiveFormsModule
+      ]
     })
     .compileComponents();
   }));
@@ -22,4 +29,5 @@ describe('LocationFormComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
 });

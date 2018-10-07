@@ -25,10 +25,10 @@ export class LocationFormComponent implements OnInit {
   }
 
   private handleError(error: HttpErrorResponse){
-    let message = error.error && error.error.Message ? error.error.Message : 'Sorry, it looks like there was a problem contacting the weather service!';
+    let message = error.error && error.error.Message ? error.error.Message : 'Sorry, it looks like there was a problem contacting the weather service.';
     switch(error.status){
       case 404:
-        message = `We couldn't find anything matching "${this.location.value}". Try searching again.`;
+        message = `We couldn't find anything matching "${this.location.value}". Please try searching for something else.`;
       break;
     }
     this.errors.push(message);
@@ -44,7 +44,7 @@ export class LocationFormComponent implements OnInit {
 
       this.weatherDataService.getData(this.location.value)
         .subscribe(resp =>{
-          this.weatherDataService.getData('Gulf Breeze').subscribe(compareResp => {
+          this.weatherDataService.getData('gulf breeze,us').subscribe(compareResp => {
             data = data.concat(resp.body);
             data = data.concat(compareResp.body);
             this.weatherData.emit(data);
